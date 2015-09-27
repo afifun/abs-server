@@ -1,4 +1,4 @@
-ABS-Servlet/nbproject/private/
+ABS-Servlet/nbproject/
 ABS-Servlet/build/
 ABS-Servlet/nbbuild/
 ABS-Servlet/dist/
@@ -8,7 +8,7 @@ ABS-Servlet/nb-configuration.xml
 ABS-Servlet/.nb-gradle/
 ABS-Tomcat/build.xml
 
-ABS-Tomcat/nbproject/private/
+ABS-Tomcat/nbproject/
 ABS-Tomcat/build/
 ABS-Tomcat/nbbuild/
 ABS-Tomcat/dist/

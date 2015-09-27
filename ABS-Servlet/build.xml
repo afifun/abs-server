@@ -68,4 +68,9 @@
     nbproject/build-impl.xml file. 
 
     -->
+
+    <!-- This script to create absservlet.jar that used in ABS-Tomcat project -->
+    <target name="absservlet.build">    
+	<jar destfile="lib-output/absservlet.jar" basedir="build\web\WEB-INF\classes"/>
+    </target>
 </project>

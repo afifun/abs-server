@@ -127,7 +127,6 @@ public class ABSCaller extends ABSObject {
 
         if (pair != null) {
             String view = DataTransformer.convertABSStringToJavaString((ABSString) pair.getArg(0));
-            System.out.println("view dipanggil " + view);
             Context ctx = new Context();
             if (!(pair.getArg(1) instanceof List_Nil)) {
                 data = (List_Cons<ABSValue>) pair.getArg(1);
