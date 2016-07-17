@@ -17,3 +17,6 @@ ABS-Tomcat/nbactions.xml
 ABS-Tomcat/nb-configuration.xml
 ABS-Tomcat/.nb-gradle/
 ABS-Tomcat/build.xml
+/AbsDbOrm/build/
+/AbsDbOrm/dist/
+/AbsDbOrm/nbproject/private/
