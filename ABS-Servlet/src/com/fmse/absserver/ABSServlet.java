@@ -42,14 +42,17 @@ public class ABSServlet extends HttpServlet {
             COG cog = runtime.createCOG(ABSCaller.class);
             ABSCaller absRouter = new ABSCaller(cog);
             absRouter.setRequest(request);
+            absRouter.setResponse(response);
             runtime.cogCreated(absRouter);
             ABSFut fut = runtime.asyncCall(new ABSMainCall(absRouter));
             fut.await();
             System.out.println("Servlet: getting response");
+            response = absRouter.getResponse();
             response.setContentType("application/json;charset=UTF-8");
-            PrintWriter out = response.getWriter();
-            out.print(absRouter.getResponse());
-            out.close();
+            response.setHeader("Access-Control-Allow-Origin", "*");
+//            PrintWriter out = response.getWriter();
+//            out.print(absRouter.getResponse());
+//            out.close();
         } catch (Exception ex) {
             Logger.getLogger(ABSServlet.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -44,9 +44,11 @@ public class DataTransformer {
                 int jj = 0;
                 json = json.concat("{");
                 for (String field : fields) {
+                    System.out.println(field);
                     json = json.concat("\"" + field + "\"" + " : ");
                     Method m = cls.getDeclaredMethod("getFieldValue", field.getClass());
                     m.setAccessible(true);
+                    System.out.println(m.invoke(obj, field));
                     json = json.concat(m.invoke(obj, field).toString());
                     jj++;
                     if (jj < fields.size()) {
