@@ -37,6 +37,10 @@ public class AbsDbOrm {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        
+        AbsJdbcTransaction transaction = AbsJdbcTransaction.createTransaction();
+        transaction.createDatabase();
+        
         for (String arg : args) {
             BufferedReader br = null;
 
@@ -52,7 +56,7 @@ public class AbsDbOrm {
                     queries = queries.concat(currentLine + " ");
                 }
 
-                AbsJdbcTransaction transaction = AbsJdbcTransaction.createTransaction();
+                transaction = AbsJdbcTransaction.createTransaction();
                 System.out.println(queries);
                 transaction.createUpdateStatement(queries);
 
@@ -292,6 +296,56 @@ class AbsJdbcTransaction {
 
     public static AbsJdbcTransaction createTransaction() {
         return new AbsJdbcTransaction();
+    }
+
+    
+    public Boolean createDatabase() {
+        Boolean result = false;
+        Statement stmt = null;
+        String dbName = AbsJdbcTransaction.dbname;
+        try {
+
+            Class.forName(driver).newInstance();
+            Connection conn = DriverManager.getConnection(
+                    AbsJdbcTransaction.url + "?allowMultiQueries=true",
+                    AbsJdbcTransaction.username,
+                    AbsJdbcTransaction.password);
+            stmt = conn.createStatement();
+
+            System.out.println("Creating database " + dbName);
+            String sql = "CREATE DATABASE " + dbName;
+            stmt.executeUpdate(sql);
+            System.out.println("Database created successfully...");
+            result = true;
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            if (se.getErrorCode() == 1007) {
+                // Database already exists error
+                System.out.println(se.getMessage());
+            } else {
+                // Some other problems, e.g. Server down, no permission, etc
+                se.printStackTrace();
+            }
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+        } finally {
+            //finally block used to close resources
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+            } catch (SQLException se2) {
+            }// nothing we can do
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+        return result;
     }
 
     public void createUpdateStatement(String query) {
